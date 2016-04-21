@@ -20,6 +20,7 @@ struct PhysicsCategory {
     static let None:  UInt32 = 0
     static let Shape: UInt32 = 0b10
     static let Target:UInt32 = 0b100
+    static let Objective:UInt32 = 0b10
 }
 
 class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
@@ -69,21 +70,6 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             addChild(bg)
         }
         
-        // directional arrow
-        let arrow = SKSpriteNode(imageNamed: "arrow")
-        arrow.name = "arrow"
-        arrow.position = CGPointMake(CGRectGetMidX(playableRect) , CGRectGetMinY(playableRect) + arrow.size.height)
-        arrow.zPosition = SpriteLayer.HUD
-        arrow.alpha = 0.6
-        addChild(arrow)
-        
-        // Other shapes
-        square.name = "shape"
-        square.setScale(2.0)
-        square.position = CGPoint(x: playableRect.width * 0.25, y: playableRect.height * 0.50)
-        square.zPosition = SpriteLayer.Sprite
-        
-        addChild(square)
         
         // Physics
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
@@ -92,14 +78,6 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         
         //Set up physiscs things
         physicsWorld.contactDelegate = self;
-        
-        // setting up the contact delegates
-        arrow.physicsBody?.categoryBitMask = PhysicsCategory.Shape
-        square.physicsBody?.categoryBitMask = PhysicsCategory.Shape
-        
-        //load in a shader that I made
-        let shader = SKShader(fileNamed: "TintRed.fsh")
-        arrow.shader = shader;
             
     }
     
@@ -116,12 +94,6 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         guard mm.gravityVector != CGVectorMake(0, 0) else{
             return
         }
-     
-        if let arrow = childNodeWithName("arrow"){
-            // have the arrow point "up"
-            // we need to rotate 90 degrees because we're in landscape
-            arrow.zRotation = mm.rotation + CGFloat(M_PI_2)
-        }
         
         var grav = mm.gravityVector.normalized()
         if abs(grav.dx) > abs(grav.dy) {
@@ -130,7 +102,7 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             grav.dx = 0
         }
         grav.normalize()
-        grav *= 9.8;
+        grav *= 20.0;
         
        // we need to rotate 90 degrees because we're in landscape
         physicsWorld.gravity = vectorByRotatingVectorClockwise(grav)
@@ -153,64 +125,13 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask |
             contact.bodyB.categoryBitMask
-        if collision == PhysicsCategory.Shape | PhysicsCategory.Target {
-            print("A shape hit the target!")
-            
-            // which physicsBody belongs to a shape?
-            var shapeNode:SKNode?
-            if contact.bodyA.categoryBitMask == PhysicsCategory.Shape{
-                shapeNode = contact.bodyA.node
+        
+        if collision == PhysicsCategory.Target | PhysicsCategory.Objective {
+            var player:SKNode
+            if contact.bodyA.categoryBitMask == PhysicsCategory.Target {
+                player = contact.bodyA.node!;
             } else {
-                shapeNode = contact.bodyB.node
-            }
-            
-            // bail out if the shapeNode isn't in the scene anymore
-            guard shapeNode != nil else {
-                print("ShapeNode is nil, so it has already been removed for some reason!")
-                return
-            }
-            
-            // cast the SKNode to an SKSpriteNode
-            if let spriteNode = shapeNode as? SKSpriteNode{
-                
-                var isActive:Bool = false
-                
-                // does the userData dictionary exist?
-                if let userData = spriteNode.userData{
-                    // does the "active" key exist?
-                    if userData["active"] != nil {
-                        //grab the value
-                        isActive = userData["active"] as! Bool
-                    }
-                }
-                
-                if isActive{
-                    print("DO NOT runAction() on \(spriteNode.name!)")
-                }else{
-                    // set "active" to true so we only run the action once
-                    spriteNode.userData = NSMutableDictionary()
-                    spriteNode.userData = ["active":true]
-                    
-                    if spriteNode.name == "square"{
-                        spriteNode.runAction(shrinkAction)
-                    } else {
-                        let bounceAction = SKAction.sequence([
-                            //SKAction.playSoundFileNamed("pop.mp3", waitForCompletion: false),
-                            SKAction.runBlock({print("bounce")}),
-                            SKAction.applyImpulse(CGVectorMake(-500, -500), duration: 0.1),
-                            SKAction.waitForDuration(0.5),
-                            SKAction.runBlock({
-                                    print("reset active on \(spriteNode.name)")
-                                    spriteNode.userData = ["active":false]
-                                })
-                            ])
-                        
-                        spriteNode.runAction(bounceAction)
-                    }
-                    
-                    print("runAction() on \(spriteNode.name!)")
-                }
-                
+                player = contact.bodyB.node!;
             }
         }
     }
