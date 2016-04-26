@@ -10,34 +10,53 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    var scene = GameScene()
+    var skView:SKView!
+    let showDebugData = true
+    let showPhysics = true
+    let screenSize = CGSize(width:2048, height: 1536)
+    let scaleMode = SKSceneScaleMode.AspectFill
+    var gameScene:GameScene?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.becomeFirstResponder()
-        scene = GameScene(fileNamed:"GameScene")!
-        
-        // Configure the view.
-        let skView = self.view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-       // skView.showsPhysics = true // uncomment to see a memory leak!
-        
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView = self.view as! SKView
         skView.ignoresSiblingOrder = true
-        
-        
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
-        
-        skView.presentScene(scene)
-        
+        //Load the home screen
+        loadHomeScene()
+    }
+    
+    // MARK: - Scene Navigation - 
+    func loadHomeScene() {
+        let scene = HomeScene(size:screenSize, scaleMode:scaleMode, gameManager: self)
+        let reveal = SKTransition.crossFadeWithDuration(1)
+        skView.presentScene(scene, transition: reveal)
+    }
+    
+    func loadGameScene(level:Int){
         MotionManager.sharedMotionManager.startUpdates()
+        
+        gameScene = GameScene(fileNamed: "GameScene\(level)")!
+        gameScene?.scaleMode = scaleMode
+        gameScene?.level = level
+        gameScene?.gameManager = self
+        
+        if showDebugData{
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+        }
+        
+        if showPhysics{
+            skView.showsPhysics = true
+        }
+        
+        let reveal = SKTransition.doorsOpenHorizontalWithDuration(1)
+        skView.presentScene(gameScene!, transition: reveal)
     }
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake {
-           scene.shake()
+           gameScene?.shake()
         }
     }
 

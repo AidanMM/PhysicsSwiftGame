@@ -23,9 +23,17 @@ struct PhysicsCategory {
     static let Objective:UInt32 = 0b10
 }
 
+protocol CustomNodeEvents{
+    func didMoveToView()
+}
+
 class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
     var playableRect:CGRect = CGRectZero
-    let square = SKSpriteNode(imageNamed: "square")
+    var gameManager:GameViewController?
+    var level:Int = 0
+    var portalA:Portal?
+    var portalB:Portal?
+    var firstPortal:Bool = false
     
     let shrinkAction = SKAction.sequence([
         //SKAction.playSoundFileNamed("pop.mp3", waitForCompletion: false),
@@ -74,11 +82,15 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         // Physics
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
-        square.physicsBody = SKPhysicsBody(rectangleOfSize: square.frame.size)
         
         //Set up physiscs things
         physicsWorld.contactDelegate = self;
-            
+        
+        let node = childNodeWithName("//Objective") as! SKSpriteNode
+        node.physicsBody = SKPhysicsBody(rectangleOfSize: node.size)
+        node.physicsBody!.dynamic = false
+        node.physicsBody!.affectedByGravity = false
+        node.physicsBody!.categoryBitMask = PhysicsCategory.Shape
     }
     
     // called by shaking the phone or Hardware > Shake Gesture in the simulator 
@@ -122,17 +134,59 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
                 return true
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch:UITouch = touches.first!
+        let positionInScene = touch.locationInNode(self)
+        
+        enumerateChildNodesWithName("Wall", usingBlock: {node, _ in
+            if node.containsPoint(positionInScene) {
+                if self.firstPortal == false{
+                    self.firstPortal = true
+                    if self.portalA == nil {
+                        self.portalA =  Portal(imageNamed: "square")
+                        self.addChild(self.portalA!)
+                    }
+                    if self.portalB != nil && self.portalA?.otherPortal == nil {
+                        self.portalA?.linkPortal(self.portalB!)
+                    }
+                    self.portalA?.initialize(node as! SKSpriteNode)
+                } else {
+                    self.firstPortal = false
+                    if self.portalB == nil {
+                        self.portalB =  Portal(imageNamed: "square")
+                        self.addChild(self.portalB!)
+                    }
+                    self.portalB?.initialize(node as! SKSpriteNode)
+                    if self.portalA?.otherPortal == nil {
+                        self.portalA?.linkPortal(self.portalB!)
+                    }
+                }
+            }
+        })
+    }
+    
     func didBeginContact(contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask |
             contact.bodyB.categoryBitMask
         
         if collision == PhysicsCategory.Target | PhysicsCategory.Objective {
-            var player:SKNode
+            var first:SKSpriteNode
+            var other:SKSpriteNode
             if contact.bodyA.categoryBitMask == PhysicsCategory.Target {
-                player = contact.bodyA.node!;
+                first = contact.bodyA.node as! SKSpriteNode
+                other = contact.bodyB.node as! SKSpriteNode
             } else {
-                player = contact.bodyB.node!;
+                first = contact.bodyB.node as! SKSpriteNode
+                other = contact.bodyA.node as! SKSpriteNode
             }
+            
+            if other.name == "Objective" && first.name == "target" {
+                gameManager?.loadGameScene(level + 1)
+            }
+            if other.name == "portal" {
+                (other as! Portal).telaportSprite(first);
+            }
+            
         }
     }
     
