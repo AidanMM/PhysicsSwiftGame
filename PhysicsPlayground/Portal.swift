@@ -18,14 +18,16 @@ class Portal:SKSpriteNode, SKPhysicsContactDelegate {
         self.name = "portal"
         self.size = nodeToFit.size
         self.position = nodeToFit.position
+        //self.shader = SKShader(fileNamed: "WaterRipple.fsh")
         
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width , height: self.size.width ))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width , height: self.size.height ))
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = 2
         self.physicsBody?.contactTestBitMask = 0
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.affectedByGravity = false
         
+        self.hidden = false
     }
     
     func linkPortal(anotherPortal:Portal){
@@ -45,8 +47,10 @@ class Portal:SKSpriteNode, SKPhysicsContactDelegate {
     }
     
     func unlink() {
+        self.hidden = true
         self.color = SKColor.blackColor()
         self.otherPortal!.color = SKColor.blackColor()
+        self.otherPortal?.hidden = true
         otherPortal?.otherPortal = nil
         otherPortal = nil
     }
@@ -60,6 +64,7 @@ class Portal:SKSpriteNode, SKPhysicsContactDelegate {
             var dir = sprite.physicsBody?.velocity.normalized()
             dir = CGVectorMake(dir!.dx * (sprite.size.width - size.width), dir!.dy * (sprite.size.height - size.height))
             sprite.runAction(SKAction.moveTo(CGPoint(x: (otherPortal?.position.x)! + dir!.dx, y: (otherPortal?.position.y)! + dir!.dy), duration: 0))
+            SKTAudio.sharedInstance().playSoundEffect("superWoosh.wav")
             unlink();
         }
     }

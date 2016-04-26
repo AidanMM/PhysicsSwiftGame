@@ -23,17 +23,17 @@ struct PhysicsCategory {
     static let Objective:UInt32 = 0b10
 }
 
-protocol CustomNodeEvents{
-    func didMoveToView()
-}
-
 class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
     var playableRect:CGRect = CGRectZero
     var gameManager:GameViewController?
     var level:Int = 0
+    var restartButton:SKSpriteNode?
+    var backButton:SKSpriteNode?
     var portalA:Portal?
     var portalB:Portal?
     var firstPortal:Bool = false
+    var timePassed:Float = 0
+    var oldTime:CFTimeInterval?
     
     let shrinkAction = SKAction.sequence([
         //SKAction.playSoundFileNamed("pop.mp3", waitForCompletion: false),
@@ -43,19 +43,16 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
     
     // MARK: - Initialization -
     override func didMoveToView(view: SKView) {
-        // Calculate playable margin for landscape
-        let maxAspectRatio: CGFloat = 16.0/9.0 // iPhone 5
-        let maxAspectRatioHeight = size.width / maxAspectRatio
-        let playableMargin: CGFloat = (size.height - maxAspectRatioHeight)/2
-        playableRect = CGRect(x: 0, y: playableMargin,
-            width: size.width, height: size.height-playableMargin*2)
-        
+        /*let backgroundMusic = SKAudioNode(fileNamed: "background-music-aac.caf")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)*/
+    
+        playableRect = (gameManager?.determinePlayableRect(self))!
         setupWorld()
     }
     
     // MARK: - Helpers -
     func setupWorld(){
-        
         /*
         If we are on an iPad or a 4S, draw the playable rect.
         We will draw this as a procedurally generated texture - so we can see how it's done.
@@ -78,7 +75,6 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             addChild(bg)
         }
         
-        
         // Physics
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
@@ -86,18 +82,24 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         //Set up physiscs things
         physicsWorld.contactDelegate = self;
         
+        //Set up animated end goal
         let node = childNodeWithName("//Objective") as! SKSpriteNode
         node.physicsBody = SKPhysicsBody(rectangleOfSize: node.size)
         node.physicsBody!.dynamic = false
         node.physicsBody!.affectedByGravity = false
         node.physicsBody!.categoryBitMask = PhysicsCategory.Shape
-    }
-    
-    // called by shaking the phone or Hardware > Shake Gesture in the simulator 
-    func shake() {
         
+        //Set up buttons on every game world for back and restart
+        restartButton = SKSpriteNode(imageNamed: "Restart")
+        restartButton?.setScale(0.7)
+        restartButton!.position = CGPointMake(playableRect.origin.x + restartButton!.size.width / 2, playableRect.size.height + playableRect.origin.y - restartButton!.size.height / 2)
+        backButton = SKSpriteNode(imageNamed: "Back")
+        backButton?.setScale(0.7)
+        backButton!.position = CGPointMake(playableRect.origin.x + playableRect.size.width - backButton!.size.width / 2, playableRect.size.height + playableRect.origin.y - backButton!.size.height / 2)
+        
+        addChild(restartButton!)
+        addChild(backButton!)
     }
-    
  
     override func update(currentTime: CFTimeInterval) {
         let mm = MotionManager.sharedMotionManager
@@ -125,6 +127,10 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             print("gravityVector=\(mm.gravityVector)")
             print("transform=\(mm.transform)") // transform is used in UIKit classes
         }
+        if oldTime != nil {
+            timePassed += Float(currentTime - oldTime!)
+        }
+        oldTime = currentTime
         
     }
     
@@ -143,7 +149,7 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
                 if self.firstPortal == false{
                     self.firstPortal = true
                     if self.portalA == nil {
-                        self.portalA =  Portal(imageNamed: "square")
+                        self.portalA =  Portal(imageNamed: "Portal")
                         self.addChild(self.portalA!)
                     }
                     if self.portalB != nil && self.portalA?.otherPortal == nil {
@@ -153,7 +159,7 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
                 } else {
                     self.firstPortal = false
                     if self.portalB == nil {
-                        self.portalB =  Portal(imageNamed: "square")
+                        self.portalB =  Portal(imageNamed: "Portal")
                         self.addChild(self.portalB!)
                     }
                     self.portalB?.initialize(node as! SKSpriteNode)
@@ -161,8 +167,18 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
                         self.portalA?.linkPortal(self.portalB!)
                     }
                 }
+                SKTAudio.sharedInstance().playSoundEffect("clickSparkle.mp3")
             }
         })
+        
+        if backButton!.containsPoint(positionInScene) {
+            gameManager?.loadHomeScene()
+            SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
+        }
+        if restartButton!.containsPoint(positionInScene) {
+            gameManager?.loadGameScene(level)
+            SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
+        }
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -181,6 +197,28 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             }
             
             if other.name == "Objective" && first.name == "target" {
+                if level + 1 > gameManager?.highestLevel {
+                    gameManager?.highestLevel = level + 1
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setInteger(level + 1, forKey: (gameManager?.highestLevelKey)!)
+                }
+                //See if we have a new high score
+                //Check to see if we have any user data yet and load it.
+                //first verify if the data exists at all
+                let defaults = NSUserDefaults.standardUserDefaults()
+                let num = defaults.floatForKey("\(level)")
+                var bestSpeed:Float
+                if num > 0 {
+                    //The value exists so lets check it and see if we need to save a new high score
+                    bestSpeed = num
+                    if timePassed < bestSpeed {
+                        //Write the new bestSpeed value
+                        defaults.setFloat(timePassed, forKey: "\(level)")
+                    }
+                } else {
+                    //There is no saved value for level progression so let's create one
+                    defaults.setFloat(timePassed, forKey: "\(level)")
+                }
                 gameManager?.loadGameScene(level + 1)
             }
             if other.name == "portal" {

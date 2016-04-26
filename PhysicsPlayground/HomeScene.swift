@@ -9,6 +9,8 @@
 import SpriteKit
 class HomeScene:SKScene {
     let gameManager:GameViewController
+    var playButton:SKSpriteNode?
+    var stageSelectButon:SKSpriteNode?
     
     init(size: CGSize, scaleMode:SKSceneScaleMode, gameManager:GameViewController){
         self.gameManager = gameManager
@@ -22,9 +24,33 @@ class HomeScene:SKScene {
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.purpleColor()
+        let background = SKSpriteNode(imageNamed: "HomeScene")
+        background.zPosition = -1
+        background.position = CGPointMake(size.width / 2, size.height / 2)
+        addChild(background)
+        
+        playButton = SKSpriteNode(imageNamed: "PlayButton")
+        playButton?.position = CGPointMake(size.width / 2, size.height / 2)
+        playButton?.setScale(3.0)
+        stageSelectButon = SKSpriteNode(imageNamed: "StageSelectButton")
+        stageSelectButon?.position = CGPointMake(size.width / 2, size.height / 2 - size.height / 5)
+        stageSelectButon?.setScale(3.0)
+        
+        addChild(playButton!)
+        addChild(stageSelectButon!)
+
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        gameManager.loadGameScene(5)
+        let touch:UITouch = touches.first!
+        let positionInScene = touch.locationInNode(self)
+        if playButton!.containsPoint(positionInScene) {
+            gameManager.loadGameScene(gameManager.highestLevel)
+            SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
+        }
+        else if stageSelectButon!.containsPoint(positionInScene) {
+            gameManager.loadStageSelectScene()
+            SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
+        }
     }
 }
