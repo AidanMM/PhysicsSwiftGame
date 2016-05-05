@@ -110,11 +110,6 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         }
         
         var grav = mm.gravityVector.normalized()
-        if abs(grav.dx) > abs(grav.dy) {
-            grav.dy = 0
-        } else if abs(grav.dy) > abs(grav.dx) {
-            grav.dx = 0
-        }
         grav.normalize()
         grav *= 20.0;
         
