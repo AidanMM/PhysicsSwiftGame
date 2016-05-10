@@ -75,7 +75,24 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             addChild(bg)
         }
         
-        // Physics
+        //Set up gesture recognizer
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.handleSwipeGesture(_:)))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view!.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.handleSwipeGesture(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view!.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.handleSwipeGesture(_:)))
+        swipeUp.direction = UISwipeGestureRecognizerDirection.Up
+        self.view!.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.handleSwipeGesture(_:)))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view!.addGestureRecognizer(swipeDown)
+        
+        //Physics
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
         
@@ -113,7 +130,7 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         grav.normalize()
         grav *= 20.0;
         
-       // we need to rotate 90 degrees because we're in landscape
+        // we need to rotate 90 degrees because we're in landscape
         physicsWorld.gravity = vectorByRotatingVectorClockwise(grav)
         
         
@@ -167,13 +184,35 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         })
         
         if backButton!.containsPoint(positionInScene) {
-            gameManager?.loadHomeScene()
+            gameManager?.loadStageSelectScene()
             SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
         }
         if restartButton!.containsPoint(positionInScene) {
             gameManager?.loadGameScene(level)
             SKTAudio.sharedInstance().playSoundEffect("menuClick.wav")
         }
+    }
+    
+    func handleSwipeGesture(gesture: UIGestureRecognizer) {
+        /*if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            var grav:CGVector
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                grav = CGVectorMake(1.0, 0.0)
+            case UISwipeGestureRecognizerDirection.Down:
+                grav = CGVectorMake(0.0, -1.0)
+            case UISwipeGestureRecognizerDirection.Left:
+                grav = CGVectorMake(-1.0, 0.0)
+            case UISwipeGestureRecognizerDirection.Up:
+                grav = CGVectorMake(0.0, 1.0)
+            default:
+                grav = CGVectorMake(0.0, 0.0)
+                break
+            }
+            grav *= 20;
+            physicsWorld.gravity = grav
+        }*/
     }
     
     func didBeginContact(contact: SKPhysicsContact) {

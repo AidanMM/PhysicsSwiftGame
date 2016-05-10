@@ -24,17 +24,22 @@ class HomeScene:SKScene {
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.purpleColor()
-        let background = SKSpriteNode(imageNamed: "HomeScene")
+        let background = SKSpriteNode(imageNamed: "SpecturmBackground")
         background.zPosition = -1
         background.position = CGPointMake(size.width / 2, size.height / 2)
+        background.setScale(1.2)
         addChild(background)
         
         playButton = SKSpriteNode(imageNamed: "PlayButton")
         playButton?.position = CGPointMake(size.width / 2, size.height / 2)
         playButton?.setScale(3.0)
+        playButton?.colorBlendFactor = 1.0
+        playButton?.color = SKColor.blackColor()
         stageSelectButon = SKSpriteNode(imageNamed: "StageSelectButton")
         stageSelectButon?.position = CGPointMake(size.width / 2, size.height / 2 - size.height / 5)
         stageSelectButon?.setScale(3.0)
+        stageSelectButon?.colorBlendFactor = 1.0
+        stageSelectButon?.color = SKColor.blackColor()
         
         addChild(playButton!)
         addChild(stageSelectButon!)

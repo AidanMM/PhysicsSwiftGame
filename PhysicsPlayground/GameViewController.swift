@@ -16,9 +16,10 @@ class GameViewController: UIViewController {
     let screenSize = CGSize(width:2048, height: 1536)
     let scaleMode = SKSceneScaleMode.AspectFill
     let highestLevelKey:String = "highestLevel"
-    let NumLevels:Int = 5;
+    let NumLevels:Int = 10;
     var gameScene:GameScene?
     var highestLevel:Int = 0
+    var area = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,7 @@ class GameViewController: UIViewController {
             defaults.setInteger(1, forKey: highestLevelKey)
             highestLevel = 1
         }
-    SKTAudio.sharedInstance().playBackgroundMusic("RussianSailorDance.mp3")
+    SKTAudio.sharedInstance().playBackgroundMusic("HomeScreenTheme.wav")
         //Load the home screen
         loadHomeScene()
     }
@@ -47,12 +48,14 @@ class GameViewController: UIViewController {
         let scene = HomeScene(size:screenSize, scaleMode:scaleMode, gameManager: self)
         let reveal = SKTransition.crossFadeWithDuration(1)
         skView.presentScene(scene, transition: reveal)
+        SKTAudio.sharedInstance().playBackgroundMusic("HomeScreenTheme.wav")
     }
     
     func loadStageSelectScene() {
         let scene = StageSelect(size:screenSize, scaleMode:scaleMode, gameManager: self)
         let reveal = SKTransition.doorsOpenVerticalWithDuration(1)
         skView.presentScene(scene, transition: reveal)
+        SKTAudio.sharedInstance().playBackgroundMusic("Credits.wav")
     }
     
     func loadGameScene(level:Int){
@@ -76,6 +79,24 @@ class GameViewController: UIViewController {
         
         if showPhysics{
             skView.showsPhysics = true
+        }
+        
+        //Play the corresponding music for the given area
+        var areaFromLevel = ((level - 1) / 5) + 1
+        if areaFromLevel != area {
+            area = areaFromLevel
+            switch area {
+            case 1:
+                SKTAudio.sharedInstance().playBackgroundMusic("Area1.wav")
+            case 2:
+                SKTAudio.sharedInstance().playBackgroundMusic("Area2.wav")
+            case 3:
+                SKTAudio.sharedInstance().playBackgroundMusic("Area3.wav")
+            case 4:
+                SKTAudio.sharedInstance().playBackgroundMusic("Area4.wav")
+            default:
+                SKTAudio.sharedInstance().playBackgroundMusic("HomeScreenTheme.wav")
+            }
         }
         
         let reveal = SKTransition.doorsOpenHorizontalWithDuration(1)
