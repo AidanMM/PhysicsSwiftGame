@@ -14,7 +14,7 @@ class StageSelect:SKScene {
     var leftPageButton:SKSpriteNode?
     var pageNumber = 1
     var playableRect = CGRectMake(0, 0, 0, 0)
-    var buttons = [SKSpriteNode]()
+    var buttons = [SKNode]()
     
     init(size: CGSize, scaleMode:SKSceneScaleMode, gameManager:GameViewController){
         self.gameManager = gameManager
@@ -30,7 +30,7 @@ class StageSelect:SKScene {
         let playableRect = gameManager.determinePlayableRect(self)
         self.playableRect = playableRect
         backgroundColor = SKColor.blackColor()
-        let background = SKSpriteNode(imageNamed: "SpecturmBackground")
+        let background = SKSpriteNode(imageNamed: "StageSelect")
         background.setScale(1.2)
         background.zPosition = -1
         background.position = CGPointMake(size.width / 2, size.height / 2)
@@ -135,6 +135,7 @@ class StageSelect:SKScene {
             stageValue.userData = ["levelIndex":Int(i)]
             stageValue.position = CGPointMake( playableRect.origin.x + offset * CGFloat(buttonVal - 1) + stageValue.size.width * 2,
                                                playableRect.origin.y + playableRect.size.height / 3)
+            stageValue.setScale(1.4)
             stageValue.colorBlendFactor = 1.0
             if i <= gameManager.highestLevel {
                 stageValue.userData?.setObject(1, forKey: "valid")
@@ -154,10 +155,10 @@ class StageSelect:SKScene {
             let starSprite = SKSpriteNode(imageNamed: "StarP")
             starSprite.position = CGPointMake(stageValue.position.x, stageValue.position.y - stageValue.size.height - starSprite.size.height)
             starSprite.setScale(4)
-            if num == 0 || num > 10 {
+            if num == 0 || num > gameManager.goldTime * 2 {
                 continue
             }
-            else if num > 5 {
+            else if num > gameManager.goldTime {
                 starSprite.colorBlendFactor = 1.0
                 starSprite.color = SKColor.grayColor()
             } else {
@@ -167,26 +168,39 @@ class StageSelect:SKScene {
             addChild(starSprite)
         }
         var StageSample:SKSpriteNode
+        let label:SKLabelNode = SKLabelNode()
+        label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        label.fontSize = 75
+        label.fontName = "Copperplate"
         switch self.pageNumber {
         case 1:
             StageSample = SKSpriteNode(imageNamed: "CityScapeBackground")
-            StageSample.size = CGSizeMake(400, 400)
+            StageSample.size = CGSizeMake(800, 500)
+            label.text = "Area 1: A Peacful Night"
         case 2:
             StageSample = SKSpriteNode(imageNamed: "NightCity")
-            StageSample.size = CGSizeMake(400, 400)
+            StageSample.size = CGSizeMake(800, 500)
+            label.text = "Area 2: After Dark"
         case 3:
-            StageSample = SKSpriteNode(imageNamed: "CityScapeBackground")
-            StageSample.size = CGSizeMake(400, 400)
+            StageSample = SKSpriteNode(imageNamed: "8BtiSunsetBackground")
+            StageSample.size = CGSizeMake(800, 500)
+            label.text = "Area 3: A Day Begins"
         case 4:
-            StageSample = SKSpriteNode(imageNamed: "CityScapeBackground")
-            StageSample.size = CGSizeMake(400, 400)
+            StageSample = SKSpriteNode(imageNamed: "8BitSunBackground")
+            StageSample.size = CGSizeMake(800, 500)
+            label.text = "Area 4: Dawnbreak"
         default:
             StageSample = SKSpriteNode(imageNamed: "CityScapeBackground")
-            StageSample.size = CGSizeMake(400, 400)
+            StageSample.size = CGSizeMake(800, 500)
         }
         StageSample.position = CGPointMake(playableRect.origin.x + playableRect.size.width / 2, playableRect.origin.y + playableRect.size.height / 3 * 2)
         addChild(StageSample)
         buttons.append(StageSample)
+        
+        label.position = StageSample.position
+        label.position = CGPointMake(label.position.x, label.position.y + 300)
+        addChild(label)
+        buttons.append(label)
     }
 }
 

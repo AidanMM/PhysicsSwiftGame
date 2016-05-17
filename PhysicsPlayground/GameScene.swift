@@ -116,6 +116,12 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
         
         addChild(restartButton!)
         addChild(backButton!)
+        
+        //Tell any inverse toggle walls to become hidden and uncollidable
+        enumerateChildNodesWithName("InverseToggleWall", usingBlock: {node, _ in
+            node.physicsBody?.categoryBitMask = 4
+            node.hidden = true;
+        })
     }
  
     override func update(currentTime: CFTimeInterval) {
@@ -257,6 +263,58 @@ class GameScene: SKScene,UIGestureRecognizerDelegate,SKPhysicsContactDelegate {
             }
             if other.name == "portal" {
                 (other as! Portal).telaportSprite(first);
+            }
+            if other.name == "Spike" {
+                if arc4random_uniform(2) > 0 {
+                    SKTAudio.sharedInstance().playSoundEffect("death1.flac")
+                } else {
+                    SKTAudio.sharedInstance().playSoundEffect("death2.wav")
+                }
+                gameManager?.loadGameScene(level)
+            }
+            if other.name == "Button1" {
+                //Loop through and delete all the wall's that correspond.  Button 2 can be toggled on and off
+                enumerateChildNodesWithName("ButtonWall1", usingBlock: {node, _ in
+                        node.removeFromParent()
+                })
+                other.texture = SKTexture(imageNamed: "ButtonDown")
+                SKTAudio.sharedInstance().playSoundEffect("switch1.flac")
+            }
+            if other.name == "Button2" {
+                //Loop through and delete all the wall's that correspond.  Button 2 can be toggled on and off
+                enumerateChildNodesWithName("ToggleWall", usingBlock: {node, _ in
+                    node.physicsBody?.categoryBitMask = 4
+                    node.hidden = true;
+                })
+                enumerateChildNodesWithName("InverseToggleWall", usingBlock: {node, _ in
+                    node.physicsBody?.categoryBitMask = 4294967295;
+                    node.hidden = false;
+                })
+                enumerateChildNodesWithName("Button3", usingBlock: {node, _ in
+                    (node as! SKSpriteNode).texture = SKTexture(imageNamed: "ButtonUp")
+                })
+                enumerateChildNodesWithName("Button2", usingBlock: {node, _ in
+                    (node as! SKSpriteNode).texture = SKTexture(imageNamed: "ButtonDown")
+                })
+                SKTAudio.sharedInstance().playSoundEffect("switch2.wav")
+            }
+            if other.name == "Button3" {
+                //Loop through and delete all the wall's that correspond.  Button 2 can be toggled on and off
+                enumerateChildNodesWithName("ToggleWall", usingBlock: {node, _ in
+                    node.physicsBody?.categoryBitMask = 4294967295;
+                    node.hidden = false;
+                })
+                enumerateChildNodesWithName("InverseToggleWall", usingBlock: {node, _ in
+                    node.physicsBody?.categoryBitMask = 4
+                    node.hidden = true;
+                })
+                enumerateChildNodesWithName("Button2", usingBlock: {node, _ in
+                    (node as! SKSpriteNode).texture = SKTexture(imageNamed: "ButtonUp")
+                })
+                enumerateChildNodesWithName("Button3", usingBlock: {node, _ in
+                    (node as! SKSpriteNode).texture = SKTexture(imageNamed: "ButtonDown")
+                })
+                SKTAudio.sharedInstance().playSoundEffect("switch3.wav")
             }
             
         }

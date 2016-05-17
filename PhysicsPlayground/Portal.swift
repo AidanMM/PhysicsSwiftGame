@@ -64,7 +64,7 @@ class Portal:SKSpriteNode, SKPhysicsContactDelegate {
             var dir = sprite.physicsBody?.velocity.normalized()
             dir = CGVectorMake(dir!.dx * (sprite.size.width - size.width), dir!.dy * (sprite.size.height - size.height))
             sprite.runAction(SKAction.moveTo(CGPoint(x: (otherPortal?.position.x)! + dir!.dx, y: (otherPortal?.position.y)! + dir!.dy), duration: 0))
-            SKTAudio.sharedInstance().playSoundEffect("superWoosh.wav")
+            SKTAudio.sharedInstance().playSoundEffect("portal2.wav")
             unlink();
         }
     }

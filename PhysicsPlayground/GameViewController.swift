@@ -16,10 +16,11 @@ class GameViewController: UIViewController {
     let screenSize = CGSize(width:2048, height: 1536)
     let scaleMode = SKSceneScaleMode.AspectFill
     let highestLevelKey:String = "highestLevel"
-    let NumLevels:Int = 10;
+    let NumLevels:Int = 20;
     var gameScene:GameScene?
     var highestLevel:Int = 0
     var area = 0
+    var goldTime:Float = 5.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,7 @@ class GameViewController: UIViewController {
         }
     SKTAudio.sharedInstance().playBackgroundMusic("HomeScreenTheme.wav")
         //Load the home screen
+        //loadHomeScene()
         loadHomeScene()
     }
     
@@ -51,9 +53,16 @@ class GameViewController: UIViewController {
         SKTAudio.sharedInstance().playBackgroundMusic("HomeScreenTheme.wav")
     }
     
+    func loadEndScene() {
+        let scene = EndScene(size:screenSize, scaleMode:scaleMode, gameManager: self)
+        let reveal = SKTransition.crossFadeWithDuration(1)
+        skView.presentScene(scene, transition: reveal)
+        SKTAudio.sharedInstance().playBackgroundMusic("BossMusic.wav")
+    }
+    
     func loadStageSelectScene() {
         let scene = StageSelect(size:screenSize, scaleMode:scaleMode, gameManager: self)
-        let reveal = SKTransition.doorsOpenVerticalWithDuration(1)
+        let reveal = SKTransition.crossFadeWithDuration(0.5)
         skView.presentScene(scene, transition: reveal)
         SKTAudio.sharedInstance().playBackgroundMusic("Credits.wav")
     }
@@ -61,7 +70,7 @@ class GameViewController: UIViewController {
     func loadGameScene(level:Int){
         //If we are going to hit a level that doesn't exist, stop that!
         if level > NumLevels {
-            loadStageSelectScene()
+            loadEndScene()
             return;
         }
         let nextLevel = "GameScene\(level)"

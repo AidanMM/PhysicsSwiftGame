@@ -44,6 +44,14 @@
 		CB1C4E831CCEF98F00E84E8E /* ObjectiveAnimation.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB1C4E821CCEF98F00E84E8E /* ObjectiveAnimation.sks */; };
 		CB1C4E881CCF1C7A00E84E8E /* GameScene4.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB1C4E861CCF1C7A00E84E8E /* GameScene4.sks */; };
 		CB1C4E891CCF1C7A00E84E8E /* GameScene5.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB1C4E871CCF1C7A00E84E8E /* GameScene5.sks */; };
+		CB2079061CEABEAB001C4659 /* portal1.aif in Resources */ = {isa = PBXBuildFile; fileRef = CB2079001CEABEAB001C4659 /* portal1.aif */; };
+		CB2079071CEABEAB001C4659 /* death2.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB2079011CEABEAB001C4659 /* death2.wav */; };
+		CB2079081CEABEAB001C4659 /* death1.flac in Resources */ = {isa = PBXBuildFile; fileRef = CB2079021CEABEAB001C4659 /* death1.flac */; };
+		CB2079091CEABEAB001C4659 /* switch3.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB2079031CEABEAB001C4659 /* switch3.wav */; };
+		CB20790A1CEABEAB001C4659 /* switch2.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB2079041CEABEAB001C4659 /* switch2.wav */; };
+		CB20790B1CEABEAB001C4659 /* switch1.flac in Resources */ = {isa = PBXBuildFile; fileRef = CB2079051CEABEAB001C4659 /* switch1.flac */; };
+		CB20790D1CEABF59001C4659 /* portal2.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB20790C1CEABF59001C4659 /* portal2.wav */; };
+		CB24E7561CEAF27D004CD064 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB24E7551CEAF27D004CD064 /* EndScene.swift */; };
 		CB52D3761CCDB5D700CBDF16 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB52D3751CCDB5D700CBDF16 /* HomeScene.swift */; };
 		CB52D3781CCDBE7B00CBDF16 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB52D3771CCDBE7B00CBDF16 /* GameScene2.sks */; };
 		CB52D37A1CCDBE8100CBDF16 /* GameScene3.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB52D3791CCDBE8100CBDF16 /* GameScene3.sks */; };
@@ -61,6 +69,16 @@
 		CB8011A11CE16C4B006EB953 /* GameScene8.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB80119D1CE16C4B006EB953 /* GameScene8.sks */; };
 		CB8011A21CE16C4B006EB953 /* GameScene9.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB80119E1CE16C4B006EB953 /* GameScene9.sks */; };
 		CB8011A31CE16C4B006EB953 /* GameScene10.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB80119F1CE16C4B006EB953 /* GameScene10.sks */; };
+		CB9A1B4E1CEA6349001176AA /* GameScene11.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B4D1CEA6349001176AA /* GameScene11.sks */; };
+		CB9A1B501CEA6356001176AA /* GameScene16.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B4F1CEA6356001176AA /* GameScene16.sks */; };
+		CB9A1B551CEA65B3001176AA /* GameScene12.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B511CEA65B3001176AA /* GameScene12.sks */; };
+		CB9A1B561CEA65B3001176AA /* GameScene13.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B521CEA65B3001176AA /* GameScene13.sks */; };
+		CB9A1B571CEA65B3001176AA /* GameScene14.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B531CEA65B3001176AA /* GameScene14.sks */; };
+		CB9A1B581CEA65B3001176AA /* GameScene15.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B541CEA65B3001176AA /* GameScene15.sks */; };
+		CB9A1B5D1CEA65C5001176AA /* GameScene17.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B591CEA65C5001176AA /* GameScene17.sks */; };
+		CB9A1B5E1CEA65C5001176AA /* GameScene18.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B5A1CEA65C5001176AA /* GameScene18.sks */; };
+		CB9A1B5F1CEA65C5001176AA /* GameScene19.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B5B1CEA65C5001176AA /* GameScene19.sks */; };
+		CB9A1B601CEA65C5001176AA /* GameScene20.sks in Resources */ = {isa = PBXBuildFile; fileRef = CB9A1B5C1CEA65C5001176AA /* GameScene20.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +121,14 @@
 		CB1C4E821CCEF98F00E84E8E /* ObjectiveAnimation.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ObjectiveAnimation.sks; sourceTree = "<group>"; };
 		CB1C4E861CCF1C7A00E84E8E /* GameScene4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene4.sks; sourceTree = "<group>"; };
 		CB1C4E871CCF1C7A00E84E8E /* GameScene5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene5.sks; sourceTree = "<group>"; };
+		CB2079001CEABEAB001C4659 /* portal1.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = portal1.aif; sourceTree = "<group>"; };
+		CB2079011CEABEAB001C4659 /* death2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = death2.wav; sourceTree = "<group>"; };
+		CB2079021CEABEAB001C4659 /* death1.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = death1.flac; sourceTree = "<group>"; };
+		CB2079031CEABEAB001C4659 /* switch3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = switch3.wav; sourceTree = "<group>"; };
+		CB2079041CEABEAB001C4659 /* switch2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = switch2.wav; sourceTree = "<group>"; };
+		CB2079051CEABEAB001C4659 /* switch1.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = switch1.flac; sourceTree = "<group>"; };
+		CB20790C1CEABF59001C4659 /* portal2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = portal2.wav; sourceTree = "<group>"; };
+		CB24E7551CEAF27D004CD064 /* EndScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		CB52D3751CCDB5D700CBDF16 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
 		CB52D3771CCDBE7B00CBDF16 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
 		CB52D3791CCDBE8100CBDF16 /* GameScene3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene3.sks; sourceTree = "<group>"; };
@@ -120,6 +146,16 @@
 		CB80119D1CE16C4B006EB953 /* GameScene8.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene8.sks; sourceTree = "<group>"; };
 		CB80119E1CE16C4B006EB953 /* GameScene9.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene9.sks; sourceTree = "<group>"; };
 		CB80119F1CE16C4B006EB953 /* GameScene10.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene10.sks; sourceTree = "<group>"; };
+		CB9A1B4D1CEA6349001176AA /* GameScene11.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene11.sks; sourceTree = "<group>"; };
+		CB9A1B4F1CEA6356001176AA /* GameScene16.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene16.sks; sourceTree = "<group>"; };
+		CB9A1B511CEA65B3001176AA /* GameScene12.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene12.sks; sourceTree = "<group>"; };
+		CB9A1B521CEA65B3001176AA /* GameScene13.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene13.sks; sourceTree = "<group>"; };
+		CB9A1B531CEA65B3001176AA /* GameScene14.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene14.sks; sourceTree = "<group>"; };
+		CB9A1B541CEA65B3001176AA /* GameScene15.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene15.sks; sourceTree = "<group>"; };
+		CB9A1B591CEA65C5001176AA /* GameScene17.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene17.sks; sourceTree = "<group>"; };
+		CB9A1B5A1CEA65C5001176AA /* GameScene18.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene18.sks; sourceTree = "<group>"; };
+		CB9A1B5B1CEA65C5001176AA /* GameScene19.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene19.sks; sourceTree = "<group>"; };
+		CB9A1B5C1CEA65C5001176AA /* GameScene20.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene20.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +192,8 @@
 		8469F0F81CB5FBCF00605CA5 /* Scene Editor Files */ = {
 			isa = PBXGroup;
 			children = (
+				CB9A1B4C1CEA62E9001176AA /* Area4 */,
+				CB9A1B4B1CEA62DF001176AA /* Area3 */,
 				CB8011991CE16B65006EB953 /* Area2 */,
 				CB8011871CE157C6006EB953 /* Area 1 */,
 			);
@@ -168,6 +206,7 @@
 				84C71E521C8649A400E5EC98 /* GameScene.swift */,
 				CB52D3751CCDB5D700CBDF16 /* HomeScene.swift */,
 				CB1A25DA1CCF3CDC0050C659 /* StageSelect.swift */,
+				CB24E7551CEAF27D004CD064 /* EndScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -255,6 +294,13 @@
 		CB8011881CE16586006EB953 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				CB20790C1CEABF59001C4659 /* portal2.wav */,
+				CB2079001CEABEAB001C4659 /* portal1.aif */,
+				CB2079011CEABEAB001C4659 /* death2.wav */,
+				CB2079021CEABEAB001C4659 /* death1.flac */,
+				CB2079031CEABEAB001C4659 /* switch3.wav */,
+				CB2079041CEABEAB001C4659 /* switch2.wav */,
+				CB2079051CEABEAB001C4659 /* switch1.flac */,
 				CB8011971CE1668A006EB953 /* HomeScreenTheme.wav */,
 				CB8011891CE16641006EB953 /* Area1.wav */,
 				CB80118A1CE16641006EB953 /* Area2.wav */,
@@ -282,6 +328,30 @@
 				CB80119A1CE16B77006EB953 /* GameScene6.sks */,
 			);
 			name = Area2;
+			sourceTree = "<group>";
+		};
+		CB9A1B4B1CEA62DF001176AA /* Area3 */ = {
+			isa = PBXGroup;
+			children = (
+				CB9A1B511CEA65B3001176AA /* GameScene12.sks */,
+				CB9A1B521CEA65B3001176AA /* GameScene13.sks */,
+				CB9A1B531CEA65B3001176AA /* GameScene14.sks */,
+				CB9A1B541CEA65B3001176AA /* GameScene15.sks */,
+				CB9A1B4D1CEA6349001176AA /* GameScene11.sks */,
+			);
+			name = Area3;
+			sourceTree = "<group>";
+		};
+		CB9A1B4C1CEA62E9001176AA /* Area4 */ = {
+			isa = PBXGroup;
+			children = (
+				CB9A1B591CEA65C5001176AA /* GameScene17.sks */,
+				CB9A1B5A1CEA65C5001176AA /* GameScene18.sks */,
+				CB9A1B5B1CEA65C5001176AA /* GameScene19.sks */,
+				CB9A1B5C1CEA65C5001176AA /* GameScene20.sks */,
+				CB9A1B4F1CEA6356001176AA /* GameScene16.sks */,
+			);
+			name = Area4;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,33 +413,50 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB9A1B601CEA65C5001176AA /* GameScene20.sks in Resources */,
 				CB14D1011CCF6D1800E576A3 /* background-music-aac.caf in Resources */,
 				CB52D37A1CCDBE8100CBDF16 /* GameScene3.sks in Resources */,
+				CB20790A1CEABEAB001C4659 /* switch2.wav in Resources */,
 				CB14D0FD1CCF550D00E576A3 /* confetti.png in Resources */,
 				CB8011981CE1668A006EB953 /* HomeScreenTheme.wav in Resources */,
 				CB8011931CE16641006EB953 /* Area4.wav in Resources */,
+				CB20790D1CEABF59001C4659 /* portal2.wav in Resources */,
+				CB2079091CEABEAB001C4659 /* switch3.wav in Resources */,
+				CB9A1B501CEA6356001176AA /* GameScene16.sks in Resources */,
 				CB8011921CE16641006EB953 /* Area3.wav in Resources */,
+				CB9A1B571CEA65B3001176AA /* GameScene14.sks in Resources */,
 				84C71E511C8649A400E5EC98 /* GameScene1.sks in Resources */,
+				CB2079071CEABEAB001C4659 /* death2.wav in Resources */,
 				CB1C4E891CCF1C7A00E84E8E /* GameScene5.sks in Resources */,
+				CB9A1B551CEA65B3001176AA /* GameScene12.sks in Resources */,
 				CB52D3781CCDBE7B00CBDF16 /* GameScene2.sks in Resources */,
 				CB1C4E831CCEF98F00E84E8E /* ObjectiveAnimation.sks in Resources */,
 				CB8011A21CE16C4B006EB953 /* GameScene9.sks in Resources */,
+				CB9A1B5F1CEA65C5001176AA /* GameScene19.sks in Resources */,
+				CB20790B1CEABEAB001C4659 /* switch1.flac in Resources */,
 				84C71E5D1C8649A400E5EC98 /* LaunchScreen.storyboard in Resources */,
 				CB8011911CE16641006EB953 /* Area2.wav in Resources */,
 				CB14D1051CCF6EE100E576A3 /* clickSparkle.mp3 in Resources */,
 				67BE95F31CBD3CF900FFDA75 /* TintRed.fsh in Resources */,
 				CB14D1031CCF6DBE00E576A3 /* superWoosh.wav in Resources */,
 				CB8011901CE16641006EB953 /* Area1.wav in Resources */,
+				CB9A1B581CEA65B3001176AA /* GameScene15.sks in Resources */,
 				CB14D0FF1CCF6C7200E576A3 /* RussianSailorDance.mp3 in Resources */,
 				CB8011A11CE16C4B006EB953 /* GameScene8.sks in Resources */,
+				CB9A1B5E1CEA65C5001176AA /* GameScene18.sks in Resources */,
 				CB8011A01CE16C4B006EB953 /* GameScene7.sks in Resources */,
+				CB2079081CEABEAB001C4659 /* death1.flac in Resources */,
+				CB2079061CEABEAB001C4659 /* portal1.aif in Resources */,
 				67BE95F51CBD3DF600FFDA75 /* WaterRipple.fsh in Resources */,
 				CB8011951CE16641006EB953 /* Credits.wav in Resources */,
 				CB8011941CE16641006EB953 /* BossMusic.wav in Resources */,
+				CB9A1B5D1CEA65C5001176AA /* GameScene17.sks in Resources */,
 				CB8011A31CE16C4B006EB953 /* GameScene10.sks in Resources */,
 				CB14D1071CCF6F9E00E576A3 /* menuClick.wav in Resources */,
 				CB8011961CE16641006EB953 /* IntenseLevelMusic.wav in Resources */,
 				CB1C4E881CCF1C7A00E84E8E /* GameScene4.sks in Resources */,
+				CB9A1B4E1CEA6349001176AA /* GameScene11.sks in Resources */,
+				CB9A1B561CEA65B3001176AA /* GameScene13.sks in Resources */,
 				84C71E5A1C8649A400E5EC98 /* Assets.xcassets in Resources */,
 				CB14D0F81CCF52CA00E576A3 /* ParticleEffect.scnp in Resources */,
 				CB14D0FC1CCF550D00E576A3 /* Confetti.scnp in Resources */,
@@ -391,6 +478,7 @@
 				8425D6EC1C865BAF0018182D /* CGPoint+Extensions.swift in Sources */,
 				8425D6F51C865BAF0018182D /* SKTTimingFunctions.swift in Sources */,
 				8425D6F41C865BAF0018182D /* SKTEffects.swift in Sources */,
+				CB24E7561CEAF27D004CD064 /* EndScene.swift in Sources */,
 				8425D6F01C865BAF0018182D /* SKAction+SpecialEffects.swift in Sources */,
 				8425D6ED1C865BAF0018182D /* CGVector+Extensions.swift in Sources */,
 				8425D6EF1C865BAF0018182D /* SKAction+Extensions.swift in Sources */,

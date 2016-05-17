@@ -24,7 +24,7 @@ class HomeScene:SKScene {
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.purpleColor()
-        let background = SKSpriteNode(imageNamed: "SpecturmBackground")
+        let background = SKSpriteNode(imageNamed: "StageSelect")
         background.zPosition = -1
         background.position = CGPointMake(size.width / 2, size.height / 2)
         background.setScale(1.2)
@@ -34,15 +34,23 @@ class HomeScene:SKScene {
         playButton?.position = CGPointMake(size.width / 2, size.height / 2)
         playButton?.setScale(3.0)
         playButton?.colorBlendFactor = 1.0
-        playButton?.color = SKColor.blackColor()
+        playButton?.color = SKColor.whiteColor()
         stageSelectButon = SKSpriteNode(imageNamed: "StageSelectButton")
         stageSelectButon?.position = CGPointMake(size.width / 2, size.height / 2 - size.height / 5)
         stageSelectButon?.setScale(3.0)
         stageSelectButon?.colorBlendFactor = 1.0
-        stageSelectButon?.color = SKColor.blackColor()
+        stageSelectButon?.color = SKColor.whiteColor()
         
         addChild(playButton!)
         addChild(stageSelectButon!)
+        
+        let line1:SKLabelNode = SKLabelNode()
+        line1.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        line1.fontSize = 300
+        line1.fontName = "Copperplate"
+        line1.text = "Puz-Portler!"
+        line1.position = CGPointMake(size.width / 2, size.height / 2 + 300)
+        addChild(line1)
 
     }
     
